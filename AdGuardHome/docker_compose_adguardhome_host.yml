@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  adguardhome:
+    build: https://raw.githubusercontent.com/UNICKCHENG/Tools-Deployment/main/AdGuardHome/dockerfile_adguardhome
+    container_name: adguardhome
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - './adguardhome/:/opt/AdGuardHome/conf/'
+      - './adguardhome_work:/opt/AdGuardHome/work'
+    network: host
