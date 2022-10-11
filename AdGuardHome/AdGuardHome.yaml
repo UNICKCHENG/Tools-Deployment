@@ -95,7 +95,7 @@ tls:
   certificate_path: ""
   private_key_path: ""
 filters:
-  - enabled: true
+  - enabled: false
     url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
     name: AdGuard DNS filter
     id: 1
@@ -103,60 +103,60 @@ filters:
     url: https://adaway.org/hosts.txt
     name: AdAway Default Blocklist
     id: 2
-  - enabled: true
+  - enabled: false
     url: https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
     name: WindowsSpyBlocker - Hosts spy rules
     id: 1663594051
-  - enabled: true
+  - enabled: false
     url: https://raw.githubusercontent.com/o0HalfLife0o/list/master/ad.txt
     name: halflife
     id: 1663594054
-  - enabled: true
+  - enabled: false
     url: https://anti-ad.net/easylist.txt
     name: anti-AD
     id: 1663594055
-  - enabled: true
+  - enabled: false
     url: https://cdn.jsdelivr.net/gh/neoFelhz/neohosts@gh-pages/full/hosts.txt
     name: neoHosts
     id: 1663594056
-  - enabled: true
+  - enabled: false
     url: https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts
     name: 大圣净化 - 针对国内视频网站
     id: 1663594057
-  - enabled: true
+  - enabled: false
     url: https://raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt
     name: adgk手机去广告规则
     id: 1663594058
-  - enabled: true
+  - enabled: false
     url: http://sub.adtchrome.com/adt-chinalist-easylist.txt
     name: 广告终结者
     id: 1663594059
-  - enabled: true
+  - enabled: false
     url: https://raw.githubusercontent.com/adbyby/xwhyc-rules/master/lazy.txt
     name: Adbyby
     id: 1663594060
-  - enabled: true
+  - enabled: false
     url: https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt
     name: EasyList China+EasyList
     id: 1663594061
-  - enabled: true
+  - enabled: false
     url: https://easylist-downloads.adblockplus.org/easyprivacy.txt
     name: EasyPrivacy
     id: 1663594062
 whitelist_filters:
-  - enabled: true
+  - enabled: false
     url: https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-list.txt
     name: anti-ad白名单
     id: 1663594064
-  - enabled: true
+  - enabled: false
     url: https://raw.githubusercontent.com/hl2guide/Filterlist-for-AdGuard/master/filter_whitelist.txt
     name: filter_whitelist
     id: 1663594065
-  - enabled: true
+  - enabled: false
     url: https://raw.githubusercontent.com/liwenjie119/adg-rules/master/white.txt
     name: LWJ's white list
     id: 1663594066
-  - enabled: true
+  - enabled: false
     url: https://raw.githubusercontent.com/ChengJi-e/AFDNS/master/QD.txt
     name: DNS允许白名单
     id: 1663594067
