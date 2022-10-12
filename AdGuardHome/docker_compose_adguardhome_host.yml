@@ -6,6 +6,8 @@ services:
     container_name: adguardhome
     restart: unless-stopped
     privileged: true
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
       - './adguardhome/:/opt/AdGuardHome/conf/'
       - './adguardhome_work:/opt/AdGuardHome/work'
