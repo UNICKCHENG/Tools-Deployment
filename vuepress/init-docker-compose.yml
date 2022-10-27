@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  init_vuepress:
+    image: node:lts-slim
+    container_name: init_vuepress
+    tty: true
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    working_dir: /work
+    volumes:
+      - ./docs:/work/docs

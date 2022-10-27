@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  dev:
+    build: .
+    container_name: vuepress-dev
+    privileged: true
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+      - CHOKIDAR_USEPOLLING=true 
+    volumes:
+      - ./docs/src:/docs/src
+      - ./docs/package.json:/docs/package.json
+    ports:
+      - 18088:8080
+      - 18085:8081
+    entrypoint: ["npm", "run", "docs:dev"]
