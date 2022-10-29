@@ -1,0 +1,52 @@
+version: "3.9"
+# via unickcheng: https://github.com/UNICKCHENG
+
+services:
+  adguardhome:
+    build: ./AdGuardHome
+    container_name: adguardhome
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      private_subnet:
+        ipv4_address: ${HOST}
+    volumes:
+      - '${WORK_DIR}/adguardhome/:/opt/AdGuardHome/conf/'
+      - 'adguardhome_data:/opt/AdGuardHome/work'
+ 
+  clashmeta:
+    depends_on:
+      - adguardhome
+    build: ./Clash-Meta
+    container_name: clash-meta
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
+    network_mode: container:adguardhome
+    volumes:
+      - ${WORK_DIR}/clash:/root/.config/clash
+      # - ${WORK_DIR}/clash/config.yaml:/root/.config/clash/config.yaml
+
+volumes:
+  adguardhome_data:
+    driver: local
+
+# Create macvlan for the first time
+networks:
+  private_subnet:
+      driver: macvlan
+      driver_opts:
+        parent: ${PARENT}
+      ipam:
+        config:
+          - subnet: ${SUBNET}
+            gateway: ${GATEWAY}
+            ip_range: ${HOST}/32
+
+# If you have already created a macvlan (Recommend)
+# networks:
+#   private_subnet:
+#     external: true
