@@ -9,6 +9,7 @@ services:
     privileged: true
     environment:
       - TZ=Asia/Shanghai
+      - SUBNET=${SUBNET}
     networks:
       private_subnet:
         ipv4_address: ${HOST}
