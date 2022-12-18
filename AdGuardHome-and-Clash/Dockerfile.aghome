@@ -2,8 +2,8 @@ FROM alpine:latest
 LABEL MAINTAINER="unickcheng" GitHUb="https://github.com/UNICKCHENG"
 
 WORKDIR /opt
-COPY ./AdGuardHome-And-Clash/config/AdGuardHome.yaml \
-    ./AdGuardHome-And-Clash/config/AdGuardHome.sh ./
+COPY ./AdGuardHome-and-Clash/config/AdGuardHome.yaml \
+    ./AdGuardHome-and-Clash/config/AdGuardHome.sh ./
 
 ENV SUBNET ${SUBNET}
 ENV WEB_PORT ${WEB_PORT:-"1999"}
