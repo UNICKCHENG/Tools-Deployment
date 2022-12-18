@@ -1,0 +1,42 @@
+name: AdGuardHome And Clah
+
+on:
+  push:
+    path:
+      - 'AdGuardHome-and-Clash/*'
+  schedule:
+    - cron: '0 20 * * *'
+
+env:
+  registry: unickcheng
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push [AdGuardHome]
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          file: AdGuardHome-And-Clash/aghome.dockerfile
+          tags: ghcr.io/${{ env.registry }}/AdGuardHome:latest
+
+      - name: Build and Push [Clash]
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          file: AdGuardHome-And-Clash/clash.dockerfile
+          tags: ghcr.io/${{ env.registry }}/Clash:latest
