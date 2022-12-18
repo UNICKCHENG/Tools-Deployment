@@ -1,11 +1,14 @@
 # Get AdGuardHome dependency
-FROM ubuntu:latest AS dependency
+FROM alpine:latest AS dependency
 
 WORKDIR /app
 COPY ./AdGuardHome-and-Clash/config/AdGuardHome.yaml ./
 
+RUN apk update &&\
+    apk add ca-certificates wget --no-cache &&\
+    update-ca-certificates
+
 RUN set -x &&\
-    apt update && apt install -y wget &&\
     wget -t1 -T8 https://raw.githubusercontent.com/UNICKCHENG/Tools-Deployment/main/Scripts/info_os_and_cpu.sh &&\
     info=`sh info_os_and_cpu.sh "AdguardTeam/AdGuardHome" | grep AdGuardHome | awk -F ":" '{print $2}'` && rm -f info_os_and_cpu.sh &&\
     VERSION=`echo $info | awk -F "-" '{print $3}'` &&\
@@ -26,6 +29,7 @@ COPY --from=dependency /app/AdGuardHome/ ./
 ENV SUBNET ${SUBNET}
 ENV WEB_PORT ${WEB_PORT:-"1999"}
 
-RUN set -x; apk add apache2-utils iptables --no-cache 
+RUN apk add apache2-utils iptables --no-cache 
 
 ENTRYPOINT ["/bin/sh", "AdGuardHome.sh"]
+EXPOSE ${WEB_PORT}
