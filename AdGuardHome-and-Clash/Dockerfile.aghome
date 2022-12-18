@@ -13,11 +13,14 @@ RUN set -x &&\
     info=`sh info_os_and_cpu.sh "AdguardTeam/AdGuardHome" | grep AdGuardHome | awk -F ":" '{print $2}'` && rm -f info_os_and_cpu.sh &&\
     VERSION=`echo $info | awk -F "-" '{print $3}'` &&\
     OS=`echo $info | awk -F "-" '{print $1 "_" $2}'` &&\
-    wget -O AdGuardHome.tar.gz -t1 -T8 https://github.com/AdguardTeam/AdGuardHome/releases/download/${VERSION}/AdGuardHome_${OS}.tar.gz &&\
+    wget -O AdGuardHome.tar.gz -t1 -T8 https://github.com/AdguardTeam/AdGuardHome/releases/download/${VERSION}/AdGuardHome_${OS}.tar.gz
+
+RUN set -x &&\
     tar zxvf AdGuardHome.tar.gz && rm -f AdGuardHome.tar.gz &&\
     mkdir ./AdGuardHome/conf && mv AdGuardHome.yaml ./AdGuardHome/conf
 
-# Build Docker Image
+
+# Build AdGuardHome Image
 FROM alpine:latest
 LABEL MAINTAINER="unickcheng" GitHUb="https://github.com/UNICKCHENG"
 
