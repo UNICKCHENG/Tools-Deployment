@@ -2,7 +2,7 @@ name: AdGuardHome And Clah
 
 on:
   push:
-    path:
+    paths:
       - 'AdGuardHome-and-Clash/*'
   schedule:
     - cron: '0 20 * * *'
