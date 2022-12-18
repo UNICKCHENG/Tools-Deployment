@@ -30,9 +30,8 @@ COPY ./AdGuardHome-and-Clash/config/AdGuardHome.sh ./
 COPY --from=dependency /app/AdGuardHome/ ./
 
 ENV SUBNET ${SUBNET}
-ENV WEB_PORT ${WEB_PORT:-"1999"}
+ENV WEB_PORT ${WEB_PORT}
 
 RUN apk add apache2-utils iptables --no-cache 
 
 ENTRYPOINT ["/bin/sh", "AdGuardHome.sh"]
-EXPOSE ${WEB_PORT}
