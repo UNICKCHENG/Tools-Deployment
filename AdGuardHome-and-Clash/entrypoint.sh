@@ -10,8 +10,8 @@ if [ ! ${SUBNET} ]; then
 fi
 
 if [ ! ${WEB_PORT} ]; then
-    sed -i "s/bind_port:.*/bind_port: ${WEB_PORT}" /opt/AdGuardHome/conf/AdGuardHome.yaml
+    sed -i "s/bind_port:.*/bind_port: ${WEB_PORT}" /opt/config/AdGuardHome.yaml
 fi
 
-nohup /opt/clash/clash -d /opt/clash &
-/opt/AdGuardHome/AdGuardHome -c /opt/AdGuardHome/conf/AdGuardHome.yaml -h 0.0.0.0 -w /opt/AdGuardHome/work
+nohup /opt/clash/clash -f /opt/config/Clash.yaml -d /opt/clash &
+/opt/AdGuardHome/AdGuardHome -c /opt/config/AdGuardHome.yaml -h 0.0.0.0 -w /opt/AdGuardHome/work

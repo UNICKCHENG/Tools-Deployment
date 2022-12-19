@@ -37,12 +37,13 @@ COPY --from=packages /packages/ ./
 COPY ./AdGuardHome-and-Clash/config/AdGuardHome.yaml ./
 COPY ./AdGuardHome-and-Clash/entrypoint.sh ./
 
-RUN set -x &&\
-    tar zxvf AdGuardHome.tar.gz && rm -f AdGuardHome.tar.gz &&\
-    mkdir ./AdGuardHome/conf && mv AdGuardHome.yaml ./AdGuardHome/conf &&\
+RUN mkdir config && cd config &&\
+    mv ../AdGuardHome.yaml ./ && touch Clash.yaml
+
+RUN tar zxvf AdGuardHome.tar.gz && rm -f AdGuardHome.tar.gz &&\
     mkdir ./AdGuardHome/work
 
-RUN set -x; mkdir clash && cd clash &&\
+RUN mkdir clash && cd clash &&\
     mv ../yacd.tar.xz ./; mv ../clash.gz ./ &&\
     tar -xf yacd.tar.xz && rm -rf yacd.tar.xz && mv public yacd &&\
     gzip -f clash.gz -d
