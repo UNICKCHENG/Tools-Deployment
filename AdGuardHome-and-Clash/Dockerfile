@@ -33,9 +33,9 @@ RUN set -x &&\
 FROM alpine:latest AS files
 
 WORKDIR /files
-COPY config/AdGuardHome.yaml AdGuardHome.sh ./
 COPY --from=packages /packages/ ./
-COPY entrypoint.sh ./
+COPY ./AdGuardHome-and-Clash/config/AdGuardHome.yaml ./
+COPY ./AdGuardHome-and-Clash/entrypoint.sh ./
 
 RUN set -x &&\
     tar zxvf AdGuardHome.tar.gz && rm -f AdGuardHome.tar.gz &&\
