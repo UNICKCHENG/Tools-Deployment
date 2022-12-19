@@ -1,13 +1,11 @@
-# Get AdGuardHome dependency
-FROM alpine:latest AS dependency
+# Download AdGuardHome package
+FROM alpine:latest AS packages
 
-WORKDIR /app
-COPY ./AdGuardHome-and-Clash/config/AdGuardHome.yaml ./
+WORKDIR /packages
 
 RUN apk update &&\
     apk add ca-certificates wget --no-cache &&\
     update-ca-certificates
-
 RUN set -x &&\
     wget -t1 -T8 https://raw.githubusercontent.com/UNICKCHENG/Tools-Deployment/main/Scripts/info_os_and_cpu.sh &&\
     info=`sh info_os_and_cpu.sh "AdguardTeam/AdGuardHome" | grep AdGuardHome | awk -F ":" '{print $2}'` && rm -f info_os_and_cpu.sh &&\
@@ -15,23 +13,30 @@ RUN set -x &&\
     OS=`echo $info | awk -F "-" '{print $1 "_" $2}'` &&\
     wget -O AdGuardHome.tar.gz -t1 -T8 https://github.com/AdguardTeam/AdGuardHome/releases/download/${VERSION}/AdGuardHome_${OS}.tar.gz
 
+# Merge AdGuardHome files
+FROM alpine:latest AS files
+
+WORKDIR /files
+
+COPY --from=packages /packages/AdGuardHome.tar.gz ./
+COPY ./AdGuardHome-and-Clash/config/AdGuardHome.yaml ./
+COPY ./AdGuardHome-and-Clash/AdGuardHome.sh ./
+
 RUN set -x &&\
     tar zxvf AdGuardHome.tar.gz && rm -f AdGuardHome.tar.gz &&\
-    mkdir ./AdGuardHome/conf && mv AdGuardHome.yaml ./AdGuardHome/conf
+    mkdir ./AdGuardHome/conf && mv AdGuardHome.yaml ./AdGuardHome/conf &&\
+    mkdir ./AdGuardHome/work
 
-
-# Build AdGuardHome Image
+# Deploy AdGuardHome image
 FROM alpine:latest
 LABEL MAINTAINER="unickcheng" GitHUb="https://github.com/UNICKCHENG"
-
-WORKDIR /AdGuardHome
-
-COPY ./AdGuardHome-and-Clash/config/AdGuardHome.sh ./
-COPY --from=dependency /app/AdGuardHome/ ./
 
 ENV SUBNET ${SUBNET}
 ENV WEB_PORT ${WEB_PORT}
 
+WORKDIR /opt
+
+COPY --from=files /files/ ./
 RUN apk add apache2-utils iptables --no-cache 
 
-ENTRYPOINT ["/bin/sh", "AdGuardHome.sh"]
+ENTRYPOINT ["/bin/sh", "/opt/AdGuardHome.sh"]

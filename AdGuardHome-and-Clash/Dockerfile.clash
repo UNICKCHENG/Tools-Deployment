@@ -23,7 +23,7 @@ RUN set -x &&\
     if [ ! -s clash.gz ]; then wget -O clash.gz -t1 -T8 https://github.com/MetaCubeX/Clash.Meta/releases/download/${VERSION}/Clash.Meta-${OS}-${VERSION}.gz; fi 
 
 
-# Build Clash Image
+# Deploy Clash Image
 FROM alpine:latest
 LABEL MAINTAINER="unickcheng" GitHUb="https://github.com/UNICKCHENG"
 
