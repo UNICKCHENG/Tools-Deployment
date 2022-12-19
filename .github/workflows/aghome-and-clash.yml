@@ -35,7 +35,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           file: AdGuardHome-and-Clash/Dockerfile.aghome
-          tags: ghcr.io/${{ env.registry }}/adguardhome:latest
+          tags: ghcr.io/${{ env.registry }}/aghome-and-clash:adguardhome
 
       - name: Build and Push [Clash]
         uses: docker/build-push-action@v3
@@ -43,4 +43,12 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           file: AdGuardHome-and-Clash/Dockerfile.clash
-          tags: ghcr.io/${{ env.registry }}/clash:latest
+          tags: ghcr.io/${{ env.registry }}/aghome-and-clash:clash
+
+      - name: Build and Push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          file: AdGuardHome-and-Clash/Dockerfile
+          tags: ghcr.io/${{ env.registry }}/aghome-and-clash:latest
