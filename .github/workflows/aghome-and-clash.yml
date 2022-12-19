@@ -1,11 +1,11 @@
-name: AdGuardHome And Clah
+name: AdGuardHome And Clash
 
 on:
   push:
     paths:
       - 'AdGuardHome-and-Clash/*'
   schedule:
-    - cron: '0 20 * * *'
+    - cron: '0 20 * * 5'
 
 env:
   registry: unickcheng
